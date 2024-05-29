@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解構元解構元與拷貝建構元構元</title>
+    <style>
+        img{
+          height: auto;
+          max-width: 100%;
+        }
+        #seven {font-family: 標楷體, monospace;}
+        .topnav {
+        background-color: #333;
+        overflow: hidden;
+        }
+        /* Style the links inside the navigation bar */
+        .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        }
+        /* Change the color of links on hover */
+        .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+        }
+
+        /* Add a color to the active/current link */
+        .topnav a.active {
+        background-color: #04AA6D;
+        color: white;
+        }
+    </style>
+</head>
+<body>
+    <header><h1 id="seven">113學年度各科成品展</h1></header>
+    <div class="topnav">
+        <a class="active" href="https://simonsohai.github.io/myweb/%E4%BD%9C%E5%93%81%E6%88%90%E6%9E%9C%E8%88%87%E5%80%8B%E4%BA%BA%E5%AD%97%E4%BB%8B.html">首頁</a>
+        <a href="https://simonsohai.github.io/myself/%E8%87%AA%E6%88%91%E4%BB%8B%E7%B4%B9.html">個人介紹</a>
+        <a href="https://simonsohai.github.io/learning/%E8%87%AA%E5%AD%B8%E7%B6%B2%E7%AB%99.html">討論與自學網站</a>
+        <a href="https://simonsohai.github.io/-01/%E8%AD%89%E7%85%A7.html">證照</a>
+        <a href="https://docs.google.com/document/d/1GG02pwnsqyk6ZqLOTy2Ru9PGzsZ6IUL-j-SN8Y3Og6A/edit?usp=sharing">專題製作</a>
+        <a href="https://simonsohai.github.io/-/%E8%81%AF%E7%B5%A1%E8%B3%87%E8%A8%8A.html">聯絡資訊</a>
+    </div>
+    <h3>撰寫者：郭子綸</h3>
+    <h1>解構元解構元與拷貝建構元構元</h1>
+    <img src="https://i.imgur.com/Owj1P8a.png">
+
+    <div>
+    <h2>這個程式先定義了一個名為 CWin 的視窗類別，並在裡面宣告了一些變數。然後，定義一個拷貝的建構元，用來初始化物件。接下來，定義一個解構元，用來釋放物件所佔用的記憶體空間。最後顯示物件的屬性。這個程式展示了如何在 C++ 中建立和使用類別，以及如何管理記憶體。</h2><br>
+    <hr><br>
+    <h3>程式碼</h3>
+
+    #include <iostream><br>
+    #include <cstdlib><br>
+        
+    using namespace std;<br>
+        
+    class CWin      //定義視窗類別<br>
+    {<br>
+    private:<br>
+    <blockquote>char id,*title;         //宣告title為指向字元陣列的指標<br>
+        int width, height;</blockquote>
+    public:
+        <blockquote>CWin(char i, int w, int h,char* text=(char *)"Default window") :id(i), width(w), height(h)<br>
+        {<br>
+            title = new char[strlen(text) + 1];<br>
+            strcpy(title, text);                  //將text指向的字串拷貝到title陣列裡<br>
+            cout << "建構元被呼叫了....." << endl;<br>
+        }<br>
+        CWin(const CWin& win)                //定義拷貝建構元<br>
+        {<br>
+            cout << "拷貝建構員呼叫了...." << endl;<br>
+            id = win.id;                      //拷貝資料成員<br>
+            width = win.width;<br>
+            height = win.height;<br>
+            title = new char[strlen(win.title) + 1]; //配置記憶空間<br>
+            strcpy(title, win.title);<br>
+        }<br>
+        ~CWin()                                    //解構元的原型<br>
+        {<br>
+            cout << "解構原被呼叫了 ，Win" << this->id << "被銷毀了..." << endl;<br>
+            delete[] title;                  //釋放title所指向的記憶空間<br>
+            system("pause");<br>
+        }<br>
+        void show_member(void)            //顯示id與title成員<br>
+        {<br>
+            cout << "Windows " << id << ":" << title << endl;<br>
+            cout << "Width=" << width << ",Height=" << height << endl;<br>
+        }</blockquote>
+    };<br>
+    int main()<br>
+    {<br>
+        <blockquote>CWin win1('A', 50, 40,(char *)"Main Window");   //建立win1物件<br>
+        CWin win2('B', 40, 50);<br>
+        CWin win3('C', 60, 70);<br>
+        CWin win4('D', 90, 40);<br>
+        CWin win5(win1);            //呼叫拷貝建構元<br>
+        cout << "sizeof(win1)=" << sizeof(win1) << endl;<br>
+        cout << "sizeof(win2)=" << sizeof(win2) << endl;<br>
+        win1.show_member();<br>
+        win2.show_member();<br>
+        win5.show_member();<br>
+        system("pause");<br>
+        return 0;</blockquote>
+    }                   
+</div>
+</body>
+</html>
